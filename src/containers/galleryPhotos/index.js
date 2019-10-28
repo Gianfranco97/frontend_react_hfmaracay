@@ -1,4 +1,5 @@
 import React from 'react';
+import Carousel, { Modal, ModalGateway } from 'react-images';
 import './styles.css';
 
 export default class GalleryPhotos extends React.Component {
@@ -6,7 +7,9 @@ export default class GalleryPhotos extends React.Component {
         super()
         this.state = {
             loading: true,
-            photos: []
+            photos: [],
+            modalIsOpen: false,
+            currentIndex: 0,
         }
     }
 
@@ -20,8 +23,13 @@ export default class GalleryPhotos extends React.Component {
         } catch (error) { }
     }
 
+    toggleModal = (currentIndex) => {
+        this.setState(state => ({ modalIsOpen: !state.modalIsOpen, currentIndex }));
+    }
+
     render() {
-        const { loading, photos } = this.state
+        const { loading, photos, modalIsOpen, currentIndex } = this.state
+        const images =  photos.map(photo => ({src: photo.download_url, author: photo.author, id: photo.id}))
         console.log(photos)
 
         if (loading === true)
@@ -29,17 +37,26 @@ export default class GalleryPhotos extends React.Component {
         return (
             <section id="gallery">
                 {
-                    photos.map(photo => (
-                        <article key={photo.id}>
+                    images.map((image, index) => (
+                        <article key={image.id}>
                             {/* <a href="#" target="_blank"> */}
-                                <figure>
-                                    <img src={photo.download_url} /> 
-                                    {/* <figcaption>{photo.author}</figcaption> */}
-                                </figure>
+                            <figure onClick={() => this.toggleModal(index)}>
+                                <img src={image.src} />
+                                {/* <figcaption>{photo.author}</figcaption> */}
+                            </figure>
                             {/* </a> */}
                         </article>
                     ))
                 }
+                <ModalGateway>
+                    {
+                        modalIsOpen && (
+                            <Modal onClose={this.toggleModal}>
+                                <Carousel views={images} currentIndex={currentIndex} />
+                            </Modal>
+                        )
+                    }
+                </ModalGateway>
             </section>
         )
     }

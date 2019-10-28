@@ -1,10 +1,12 @@
 import React from 'react';
-import Login from './login';
+import Login from 'containers/login';
+import Home from 'containers/home';
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      {/* <Login /> */}
+      <Home />
     </div>
   );
 }

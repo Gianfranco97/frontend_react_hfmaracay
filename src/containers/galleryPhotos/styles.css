@@ -1,0 +1,35 @@
+#gallery {
+    margin: 1rem auto;
+    width:100%;
+    max-width:960px;
+    column-count: 3;
+}
+
+#gallery img {
+    max-width: 100%;
+    border-radius: 5%;
+    cursor: -moz-zoom-in; 
+    cursor: -webkit-zoom-in;
+    cursor: zoom-in;
+}
+
+#galley img :hover {
+    cursor: -webkit-zoom-in;
+    cursor: zoom-in;
+}
+
+#gallery:hover figure:not(:hover) {
+	opacity: 0.5;
+}
+
+@media (max-width: 767px) { 
+    #galley {
+        columns: 2;
+    }
+}
+        
+@media (max-width: 480px) {
+    #galley {
+        columns: 1;
+    }
+}
